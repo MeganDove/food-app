@@ -1,0 +1,2 @@
+This is "Section 18: Practice Project: Building a Food Order App" from the "React - The Complete Guide 2024 (incl React Router & Redux)" Udemy course.
+This practice project has been completed without a tutorial but with a starting project. Please see the first commit for what the initla files included.
