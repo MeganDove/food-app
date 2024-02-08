@@ -1,11 +1,23 @@
+import Header from "./components/Header.jsx";
+import Meals from "./components/Meals.jsx";
+import Cart from "./components/Cart.jsx";
+
+import CartContextProvider from "./store/cart-context.jsx";
+import UserJourneyContextProvider from "./store/user-journey-context.jsx";
+
 function App() {
   return (
-    <>
-      <h1>You got this 💪</h1>
-      <p>Stuck? Not sure how to proceed?</p>
-      <p>Don't worry - we've all been there. Let's build it together!</p>
-    </>
+    <UserJourneyContextProvider>
+    <CartContextProvider>
+      <Header cartNumber="5"/>
+      <Meals />
+      <Cart />
+    </CartContextProvider>
+    </UserJourneyContextProvider>
   );
+  //Header
+  //Grid
+    //Card
 }
 
 export default App;
