@@ -3,18 +3,16 @@ import { createContext, useReducer } from "react";
 export const CartContext = createContext({
 	items: [],
 	addItemToCart: () => {},
-	removeItemFromCart: () => {}
+	removeItemFromCart: () => {},
+	clearCart: () => {}
 });
 
 function cartReducer(state, action) {
 	if(action.type === "ADD_ITEM") {
 		const updatedItems = [...state.items];
-		console.log(action.payload);
-		console.log(updatedItems);
 		const existingCartItemIndex = updatedItems.findIndex(
 			(cartItem) => cartItem.item.id === action.payload.id
 		);
-		console.log(existingCartItemIndex);
 		const existingCartItem = updatedItems[existingCartItemIndex];
 
 		if(existingCartItem) {
@@ -54,6 +52,10 @@ function cartReducer(state, action) {
 		return {
 			items: updatedItems,
 		};
+	} else if(action.type === "CLEAR_CART") {
+		return {
+			items: []
+		}
 	}
 }
 
@@ -76,10 +78,17 @@ export default function CartContextProvider({children}) {
 		});
 	}
 
+	function handleClearCart() {
+		cartDispatch({
+			type: "CLEAR_CART"
+		});
+	}
+
 	const ctxValue = {
 		items: cartState.items,
 		addItemToCart: handleAddItemToCart,
-		removeItemFromCart: handleRemoveItemFromCart
+		removeItemFromCart: handleRemoveItemFromCart,
+		clearCart: handleClearCart
 	};
 
 	return (

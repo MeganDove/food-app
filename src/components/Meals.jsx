@@ -1,30 +1,9 @@
-import { useState, useEffect, useContext } from "react";
-
-import { fetchAvailableMeals } from "../http.js";
-
 import MealCard from "./MealCard.jsx";
 
+import useHttp from "../hooks/useHttp.js"
+
 export default function Meals() {
-	const [isFetching, setIsFetching] = useState(false);
-	const [availableMeals, setAvailableMeals] = useState([]);
-	const [error, setError] = useState();
-
-	useEffect(() => {
-	    async function fetchMeals() {
-			setIsFetching(true);
-			try {
-				const meals = await fetchAvailableMeals();
-				setAvailableMeals(meals);
-				setIsFetching(false);
-			} catch (error) {
-				setError({message: error.message || "Could not fetch available meals, please try again later"});
-				setIsFetching(false);
-			}
-	    }
-	    fetchMeals(); 
-	}, []);
-
-	console.log(availableMeals);
+	const {data: availableMeals, isFetching, error} = useHttp("http://localhost:3000/meals", null, []);
 
 	if(error) {
 	  return (
@@ -33,6 +12,10 @@ export default function Meals() {
 			    <p>{error.message}</p>
 		   </div>
 	  );
+	}
+
+	if(isFetching) {
+		return <p>Fetching meals...</p>
 	}
 
 	return (
